@@ -13,10 +13,16 @@ export const authOptions: AuthOptions = {
     GithubProvider({
       clientId: process.env.GITHUB_ID as string,
       clientSecret: process.env.GITHUB_SECRET as string,
+      httpOptions: {
+        timeout: 10000,
+      },
     }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      httpOptions: {
+        timeout: 10000,
+      },
     }),
     CredentialsProvider({
       name: 'credentials',
@@ -24,6 +30,7 @@ export const authOptions: AuthOptions = {
         email: { label: 'email', type: 'text' },
         password: { label: 'password', type: 'password' },
       },
+
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
           throw new Error('Invalid credentials')
@@ -52,6 +59,7 @@ export const authOptions: AuthOptions = {
       },
     }),
   ],
+
   debug: process.env.NODE_ENV === 'development',
   session: {
     strategy: 'jwt',
