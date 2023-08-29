@@ -1,5 +1,7 @@
 import React from 'react'
-import DestktopSidevar from './DestktopSidevar'
+
+import DestktopSidebar from './DestktopSidebar'
+import MobileFooter from './MobileFooter'
 
 export default async function Sidebar({
   children,
@@ -8,7 +10,8 @@ export default async function Sidebar({
 }) {
   return (
     <div className="h-full">
-      <DestktopSidevar />
+      <DestktopSidebar />
+      <MobileFooter />
       <main className="lg:pl-20 h-full">{children}</main>
     </div>
   )
