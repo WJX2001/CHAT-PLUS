@@ -4,6 +4,8 @@ import getMessages from '@/app/actions/getMessages'
 import Header from './components/Header'
 
 import EmptyState from '@/app/components/EmptyState'
+import Body from './components/Body'
+import Form from './components/Form'
 
 interface IParams {
   conversationId: string
@@ -28,6 +30,8 @@ const ChatId = async ({ params }: { params: IParams }) => {
     <div className="lg:pl-80 h-full">
       <div className="h-full flex flex-col">
         <Header conversation={conversation} />
+        <Body />
+        <Form />
       </div>
     </div>
   )
