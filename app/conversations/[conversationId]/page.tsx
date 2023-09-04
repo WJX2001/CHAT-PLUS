@@ -1,14 +1,17 @@
 import getConversationById from '@/app/actions/getConversationById'
 import getMessages from '@/app/actions/getMessages'
-import EmptyState from '@/app/components/EmptyState'
+
 import Header from './components/Header'
+
+import EmptyState from '@/app/components/EmptyState'
 
 interface IParams {
   conversationId: string
 }
 
-const ConversationId = async ({ params }: { params: IParams }) => {
-  const conversation = await getConversationById(params.conversationId) // 获得聊天消息
+const ChatId = async ({ params }: { params: IParams }) => {
+  const conversation = await getConversationById(params.conversationId)
+  console.log(conversation, '这是conversation')
   const messages = await getMessages(params.conversationId)
 
   if (!conversation) {
@@ -20,6 +23,7 @@ const ConversationId = async ({ params }: { params: IParams }) => {
       </div>
     )
   }
+
   return (
     <div className="lg:pl-80 h-full">
       <div className="h-full flex flex-col">
@@ -29,4 +33,4 @@ const ConversationId = async ({ params }: { params: IParams }) => {
   )
 }
 
-export default ConversationId
+export default ChatId
