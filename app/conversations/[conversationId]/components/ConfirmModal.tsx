@@ -72,7 +72,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({ isOpen, onClose }) => {
           </Dialog.Title>
           <div className="mt-2">
             <p className="text-sm text-gray-500">
-              你确定要删除此联系人吗？此操作不可撤销
+              你确定要删除此聊天吗？此操作不可撤销
             </p>
           </div>
         </div>

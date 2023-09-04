@@ -1,6 +1,8 @@
 import getCurrentUser from '@/app/actions/getCurrentUser'
 import { NextResponse } from 'next/server'
+
 import prisma from '@/app/libs/prismadb'
+// import { pusherServer } from "@/app/libs/pusher";
 
 export async function POST(request: Request) {
   try {
@@ -9,11 +11,11 @@ export async function POST(request: Request) {
     const { userId, isGroup, members, name } = body
 
     if (!currentUser?.id || !currentUser?.email) {
-      return new NextResponse('Unauthorized', { status: 401 }) // 凭据无效 返回401
+      return new NextResponse('Unauthorized', { status: 400 })
     }
 
     if (isGroup && (!members || members.length < 2 || !name)) {
-      return new NextResponse('Internal Data', { status: 400 }) // 请求语法无效，不符合服务器的要求
+      return new NextResponse('Invalid data', { status: 400 })
     }
 
     if (isGroup) {
@@ -26,7 +28,9 @@ export async function POST(request: Request) {
               ...members.map((member: { value: string }) => ({
                 id: member.value,
               })),
-              { id: currentUser.id },
+              {
+                id: currentUser.id,
+              },
             ],
           },
         },
@@ -34,10 +38,18 @@ export async function POST(request: Request) {
           users: true,
         },
       })
+
+      // Update all connections with new conversation
+      // newConversation.users.forEach((user) => {
+      //   if (user.email) {
+      //     pusherServer.trigger(user.email, 'conversation:new', newConversation);
+      //   }
+      // });
+
       return NextResponse.json(newConversation)
     }
 
-    const exisitingConversation = await prisma.conversation.findMany({
+    const existingConversations = await prisma.conversation.findMany({
       where: {
         OR: [
           {
@@ -54,7 +66,8 @@ export async function POST(request: Request) {
       },
     })
 
-    const singleConversation = exisitingConversation[0]
+    const singleConversation = existingConversations[0]
+
     if (singleConversation) {
       return NextResponse.json(singleConversation)
     }
@@ -77,8 +90,15 @@ export async function POST(request: Request) {
       },
     })
 
+    // Update all connections with new conversation
+    // newConversation.users.map((user) => {
+    //   if (user.email) {
+    //     pusherServer.trigger(user.email, 'conversation:new', newConversation);
+    //   }
+    // });
+
     return NextResponse.json(newConversation)
-  } catch (error: any) {
+  } catch (error) {
     return new NextResponse('Internal Error', { status: 500 })
   }
 }
