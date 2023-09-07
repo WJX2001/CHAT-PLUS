@@ -11,6 +11,7 @@ import useOtherUser from '@/app/hooks/useOtherUser'
 
 import Avatar from '@/app/components/Avatar'
 import ConfirmModal from './ConfirmModal'
+import AvatarGroup from '@/app/components/AvatarGroup'
 // import AvatarGroup from '@/app/components/AvatarGroup'
 // import ConfirmModal from './ConfirmModal'
 
@@ -41,13 +42,13 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
   // const { members } = useActiveList()
   // const isActive = members.indexOf(otherUser?.email!) !== -1
 
-  // const statusText = useMemo(() => {
-  //   if (data.isGroup) {
-  //     return `${data.users.length} members`
-  //   }
+  const statusText = useMemo(() => {
+    if (data.isGroup) {
+      return `${data.users.length} members`
+    }
 
-  //   return isActive ? 'Active' : 'Offline'
-  // }, [data, isActive])
+    // return isActive ? 'Active' : 'Offline'
+  }, [data])
 
   return (
     <>
@@ -96,17 +97,17 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                       </div>
                       <div className="relative mt-6 flex-1 px-4 sm:px-6">
                         <div className="flex flex-col items-center">
-                          {/* <div className="mb-2">
+                          <div className="mb-2">
                             {data.isGroup ? (
                               <AvatarGroup users={data.users} />
                             ) : (
                               <Avatar user={otherUser} />
                             )}
-                          </div> */}
+                          </div>
                           <div>{title}</div>
-                          {/* <div className="text-sm text-gray-500">
+                          <div className="text-sm text-gray-500">
                             {statusText}
-                          </div> */}
+                          </div>
                           <div className="flex gap-10 my-8">
                             <div
                               onClick={() => setConfirmOpen(true)}
