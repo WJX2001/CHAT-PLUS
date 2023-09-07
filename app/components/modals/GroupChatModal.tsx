@@ -12,6 +12,7 @@ import Modal from './Modal'
 import Button from '../Button'
 import { toast } from 'react-hot-toast'
 import Input from '../Input/Input'
+import Select from '../Input/Select'
 
 interface GroupChatModalProps {
   isOpen?: boolean
@@ -84,7 +85,7 @@ const GroupChatModal: React.FC<GroupChatModalProps> = ({
                 required
                 register={register}
               />
-              {/* <Select
+              <Select
                 disabled={isLoading}
                 label="Members"
                 options={users.map((user) => ({
@@ -97,7 +98,7 @@ const GroupChatModal: React.FC<GroupChatModalProps> = ({
                   })
                 }
                 value={members}
-              /> */}
+              />
             </div>
           </div>
         </div>
