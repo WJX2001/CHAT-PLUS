@@ -7,10 +7,9 @@ import Link from 'next/link'
 import { Conversation, User } from '@prisma/client'
 
 import useOtherUser from '@/app/hooks/useOtherUser'
-// import useActiveList from "@/app/hooks/useActiveList";
+import useActiveList from '@/app/hooks/useActiveList'
 
 import Avatar from '@/app/components/Avatar'
-// import AvatarGroup from "@/app/components/AvatarGroup";
 import ProfileDrawer from './ProfileDrawer'
 import AvatarGroup from '@/app/components/AvatarGroup'
 
@@ -24,15 +23,16 @@ const Header: React.FC<HeaderProps> = ({ conversation }) => {
   const otherUser = useOtherUser(conversation)
   const [drawerOpen, setDrawerOpen] = useState(false)
 
-  // const { members } = useActiveList()
-  // const isActive = members.indexOf(otherUser?.email!) !== -1
+  const { members } = useActiveList()
+  // 使用 indexOf 来查找索引，如果找不到说明不在里面，所以就不是 isActive 状态
+  const isActive = members.indexOf(otherUser?.email!) !== -1
   const statusText = useMemo(() => {
     if (conversation.isGroup) {
       return `${conversation.users.length} members`
     }
 
-    // return isActive ? 'Active' : 'Offline'
-  }, [conversation])
+    return isActive ? 'Active' : 'Offline'
+  }, [conversation, isActive])
 
   return (
     <>
